@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     {
         
 
-        CalculateMovement();
+        if (_lives>0) CalculateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
@@ -130,16 +130,18 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        if(_isTripleShot == true)
+        if(_isTripleShot == true && _lives >0)
         {
             Instantiate(_tripleShotPrefab, transform.position + offset, Quaternion.identity);
+            _audioSource.Play();
         }
-        else
+        else if (_lives >0)
         {
             Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+            _audioSource.Play();
         }
 
-        _audioSource.Play();
+        
         
         _nextFire = Time.time+ _fireRate;
 
@@ -177,7 +179,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             _audioSource.PlayOneShot(_playerExplosion);
-            
+            GetComponent<BoxCollider2D>().enabled = false;
             Destroy(this.gameObject,2f);
             
         }

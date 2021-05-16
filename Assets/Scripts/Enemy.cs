@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     private float xMax = 9f;
     [SerializeField]
     private float xMin = -9f;
+    [SerializeField]
+    private GameObject _enemyLaser;
     
 
     private Player _player;
@@ -19,6 +21,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioClip _enemyExplosion;
     private AudioSource _audioSource;
+    private float _fireRate = 3f;
+    private float _canFire = -1f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +43,28 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       if (Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            for(int i=0; i<lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+
+            }
+            
+            
+        }
+
+        CalculateMovement();
+    }
+
+
+    void CalculateMovement()
+    {
+
         //if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -46,7 +72,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
         }
-         
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -72,6 +98,11 @@ public class Enemy : MonoBehaviour
             _player.AddScore(Random.Range(5, 11));
             
             StartCoroutine(EnemyDeath());
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            return;
         }
     }
 
