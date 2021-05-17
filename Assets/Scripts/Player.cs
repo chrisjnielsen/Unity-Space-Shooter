@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         
 
         if (_lives>0) CalculateMovement();
@@ -113,14 +114,22 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
+       
+
         if (_isSpeedUp == true)
         {
+
             transform.Translate(direction * speed *2* Time.deltaTime);
 
         }
         else
-        {
-            transform.Translate(direction * speed * Time.deltaTime);
+        {   //add 75% additional speed while holding Left Shift
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                transform.Translate(direction * speed *1.75f* Time.deltaTime);
+            }
+            else transform.Translate(direction * speed * Time.deltaTime);
+
         }
 
         
