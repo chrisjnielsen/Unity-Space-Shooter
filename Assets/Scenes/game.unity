@@ -878,6 +878,7 @@ MonoBehaviour:
   - {fileID: 1341808013346904013, guid: 914465b5d6a375b47a6ac71017c01386, type: 3}
   - {fileID: 1979757214160707002, guid: 1d5ad4184eb8c6d48be505db66d66a06, type: 3}
   - {fileID: 8389096692422771064, guid: 8004a1dcdfdfc79449f770af9def17b4, type: 3}
+  - {fileID: 6225889829443204382, guid: 6311bd51d392ffd478c0730921d0a8dc, type: 3}
   xMax: 9
   xMin: -9
   _enemyContainer: {fileID: 541149809}

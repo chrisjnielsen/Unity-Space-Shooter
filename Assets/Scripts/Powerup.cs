@@ -10,6 +10,7 @@ public class Powerup : MonoBehaviour
     //0 for triple shot
     //1 for speed
     //2 for shields
+    //3 for ammo
     [SerializeField]
     private int powerupID;
     [SerializeField]
@@ -55,11 +56,16 @@ public class Powerup : MonoBehaviour
                     case 2:
                         player.ShieldActive();
                         break;
+                    case 3:
+                        player.AmmoPowerup();
+                        GetComponent<BoxCollider2D>().enabled = false;
+                        break;
                     default:
                         break;
                 }
             }
             GetComponent<SpriteRenderer>().enabled = false;
+            
             Destroy(gameObject,2f);
         }
             

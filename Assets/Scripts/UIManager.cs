@@ -22,11 +22,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _restartText;
 
+    private int ammo;
+    
+
     private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+       
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -48,8 +52,11 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateAmmo(int ammo)
     {
+        
         _ammoText.text = "Ammo: " + ammo;
-        if (ammo < 1) StartCoroutine(AmmoOut());
+        
+
+
     }
 
     public void UpdateLives(int currentlives)
@@ -85,18 +92,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    IEnumerator AmmoOut()
-    {
-        while (true)
-        {
-            _ammoText.text = "Ammo: 0";
-            yield return new WaitForSeconds(0.5f);
-            _ammoText.text = "";
-            yield return new WaitForSeconds(0.5f);
-
-        }
-        
-    }
+   
 
 
     

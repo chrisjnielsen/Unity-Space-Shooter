@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
             {
                 _laserCount = 0;
                 _ammoEmpty = true;
-                _uiManager.UpdateAmmo(_laserCount);
+                
             }
             _uiManager.UpdateAmmo(_laserCount);
         }
@@ -256,6 +256,13 @@ public class Player : MonoBehaviour
         _playerShield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
 
 
+    }
+    public void AmmoPowerup()
+    {
+        _laserCount += 15;
+        _ammoEmpty = false;
+        Debug.Log("Ammo: " + _laserCount);
+        _uiManager.UpdateAmmo(_laserCount);
     }
 
     public void AddScore(int points)
