@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
     public float speed = 5f;
     private float xMin = -11.3f;
     private float xMax = 11.3f;
-   
 
+    private int _shieldStrength = 3;
     private SpawnManager _spawnManager;
 
     [SerializeField]
@@ -163,9 +163,20 @@ public class Player : MonoBehaviour
     {
         if (_isShield == true)
         {
-            _isShield = false;
-            _playerShield.SetActive(false);
+            
+            _shieldStrength--;
+            
+            if (_shieldStrength == 2) _playerShield.GetComponent<SpriteRenderer>().color = new Color(.66f, .66f, .66f);
+            if (_shieldStrength == 1) _playerShield.GetComponent<SpriteRenderer>().color = new Color(.33f, .33f, .33f);
+            if (_shieldStrength == 0)
+            {
+                _isShield = false;
+                _playerShield.SetActive(false);
+
+            }
             return;
+           
+           
 
         }
 
@@ -226,6 +237,8 @@ public class Player : MonoBehaviour
     {
         _isShield = true;
         _playerShield.SetActive(true);
+        _shieldStrength = 3;
+        _playerShield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
 
 
     }
@@ -237,6 +250,7 @@ public class Player : MonoBehaviour
 
     }
 
+   
 
     
 

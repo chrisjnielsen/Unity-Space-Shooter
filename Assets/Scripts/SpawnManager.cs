@@ -53,7 +53,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
             GameObject newEnemy = Instantiate(enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            float _pauseSpawn = Random.Range(0.5f, 3f);
+            float _pauseSpawn = Random.Range(2f, 5f);
             yield return new WaitForSeconds(_pauseSpawn);
         }
     }

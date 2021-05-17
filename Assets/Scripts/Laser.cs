@@ -73,7 +73,9 @@ public class Laser : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if(player != null)
             {
+                Debug.Log("Enemy laser hit");
                 player.Damage();
+                this.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
     }

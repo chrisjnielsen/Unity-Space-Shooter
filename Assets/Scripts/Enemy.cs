@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     {
        if (Time.time > _canFire)
         {
-            _fireRate = Random.Range(3f, 7f);
+            _fireRate = Random.Range(4f, 8f);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_enemyLaser, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         //if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -4f)
+        if (transform.position.y < -7f)
         {
             transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
         }
@@ -110,6 +110,7 @@ public class Enemy : MonoBehaviour
     {
         
         _anim.SetTrigger("OnEnemyDeath");
+        _canFire = -1f;
         //Animator trigger
         _audioSource.PlayOneShot(_enemyExplosion);
         Destroy(this.gameObject, 2.5f);
