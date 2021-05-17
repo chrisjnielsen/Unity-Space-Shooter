@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _fireDamage2;
 
+    private int _laserCount;
+    private bool _ammoEmpty;
+
     //laser audio 
     [SerializeField]
     private AudioClip _laserAudio;
@@ -47,6 +50,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _ammoEmpty = false;
+        _laserCount = 15;
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null)
         {
@@ -60,6 +65,7 @@ public class Player : MonoBehaviour
             Debug.Log("UI Manager is NULL");
         }
         _uiManager.UpdateLives(_lives);
+        _uiManager.UpdateAmmo(_laserCount);
         
         transform.position = new Vector3(0, -3.7f, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn").GetComponent<SpawnManager>();
@@ -77,10 +83,19 @@ public class Player : MonoBehaviour
 
         if (_lives>0) CalculateMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire && _ammoEmpty==false)
         {
             FireLaser();
+            _laserCount--;
+            if (_laserCount < 1)
+            {
+                _laserCount = 0;
+                _ammoEmpty = true;
+                _uiManager.UpdateAmmo(_laserCount);
+            }
+            _uiManager.UpdateAmmo(_laserCount);
         }
+
 
 
     }
