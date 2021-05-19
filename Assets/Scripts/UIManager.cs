@@ -61,6 +61,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentlives)
     {
+        //make sure max lives cannot go above 3
+        if (currentlives > 3) currentlives = 3;
         _livesImage.sprite = _livesSprites[currentlives];
         
         if (currentlives == 0)

@@ -11,6 +11,7 @@ public class Powerup : MonoBehaviour
     //1 for speed
     //2 for shields
     //3 for ammo
+    //4 for extra life
     [SerializeField]
     private int powerupID;
     [SerializeField]
@@ -59,6 +60,10 @@ public class Powerup : MonoBehaviour
                     case 3:
                         player.AmmoPowerup();
                         GetComponent<BoxCollider2D>().enabled = false;
+                        break;
+                    case 4:
+                        player.ExtraLife();
+                        GetComponent<PolygonCollider2D>().enabled = false;
                         break;
                     default:
                         break;

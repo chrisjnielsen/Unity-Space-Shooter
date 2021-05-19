@@ -46,10 +46,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _playerExplosion;
 
-
+   
     // Start is called before the first frame update
     void Start()
     {
+       
         _ammoEmpty = false;
         _laserCount = 15;
         _audioSource = GetComponent<AudioSource>();
@@ -220,6 +221,8 @@ public class Player : MonoBehaviour
         }
 
     }
+
+   
     public void TripleShotActive()
     {
         _isTripleShot = true;
@@ -261,8 +264,18 @@ public class Player : MonoBehaviour
     {
         _laserCount += 15;
         _ammoEmpty = false;
-        Debug.Log("Ammo: " + _laserCount);
+        
         _uiManager.UpdateAmmo(_laserCount);
+    }
+
+    public void ExtraLife()
+    {
+        
+        _lives = _lives + 1;
+        //turn back off damage visuals if life restored
+        if (_lives == 3) _fireDamage1.SetActive(false);
+        else if (_lives == 2) _fireDamage2.SetActive(false);
+        _uiManager.UpdateLives(_lives);
     }
 
     public void AddScore(int points)

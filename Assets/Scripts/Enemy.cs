@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour
     private float xMin = -9f;
     [SerializeField]
     private GameObject _enemyLaser;
-    
+
+   
 
     private Player _player;
 
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (_player == null)
@@ -100,11 +102,16 @@ public class Enemy : MonoBehaviour
             StartCoroutine(EnemyDeath());
         }
 
+        
+
         if (other.CompareTag("Enemy"))
         {
             return;
         }
     }
+
+    
+
 
     IEnumerator EnemyDeath()
     {

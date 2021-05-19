@@ -9,6 +9,7 @@ TagManager:
   - Spawn
   - Powerup
   - UI
+  - Particle
   layers:
   - Default
   - TransparentFX

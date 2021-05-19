@@ -879,6 +879,7 @@ MonoBehaviour:
   - {fileID: 1979757214160707002, guid: 1d5ad4184eb8c6d48be505db66d66a06, type: 3}
   - {fileID: 8389096692422771064, guid: 8004a1dcdfdfc79449f770af9def17b4, type: 3}
   - {fileID: 6225889829443204382, guid: 6311bd51d392ffd478c0730921d0a8dc, type: 3}
+  - {fileID: 5571155650585671, guid: 9966ccbb578fb06419434d6ec4f4a52b, type: 3}
   xMax: 9
   xMin: -9
   _enemyContainer: {fileID: 541149809}
@@ -1103,7 +1104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084367220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.265, z: 0}
+  m_LocalPosition: {x: 0, y: 0.037, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 2078314324}
