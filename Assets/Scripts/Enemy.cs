@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaser;
 
-   
-
     private Player _player;
 
     private Animator _anim;
@@ -28,24 +26,19 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (_player == null)
         {
             Debug.Log("Player is NULL");
         }
-
-
         //handle for animator
         _anim = GetComponent<Animator>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Time.time> _canFire +_fireRate)
         {
             _fireRate = Random.Range(5f,10f);
@@ -58,27 +51,17 @@ public class Enemy : MonoBehaviour
                 lasers[i].AssignEnemyLaser();
             }
         }
-
-
         CalculateMovement();
     }
 
-
-    
-
-
     void CalculateMovement()
     {
-
-        //if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
+        //for later: if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
         if (transform.position.y < -7f)
         {
             transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
         }
-        
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -89,55 +72,39 @@ public class Enemy : MonoBehaviour
             if (player != null)
             {
                 GetComponent<PolygonCollider2D>().enabled = false;
-                player.Damage();
-                
+                player.Damage();   
             }
-            
             StartCoroutine(EnemyDeath());
         }
 
         if (other.CompareTag("Laser"))
         {
-            
             Destroy(other.gameObject);
             GetComponent<PolygonCollider2D>().enabled=false;
             _player.AddScore(Random.Range(5, 11));
-            
             StartCoroutine(EnemyDeath());
         }
         
         if (other.CompareTag("Shield"))
         {
-
-            
             _player.Damage();
             _player.AddScore(Random.Range(5, 11));
-
             StartCoroutine(EnemyDeath());
         }
-
-
-
-
         if (other.CompareTag("Enemy"))
         {
             return;
         }
     }
 
-    
-
-
     IEnumerator EnemyDeath()
     {
-        
         _anim.SetTrigger("OnEnemyDeath");
+        GetComponent<PolygonCollider2D>().enabled = false;
         _canFire =-1;
         //Animator trigger
         _audioSource.PlayOneShot(_enemyExplosion);
         Destroy(this.gameObject, 2.5f);
         yield return null;
-
     }
-
 }

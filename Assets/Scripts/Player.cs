@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     private bool _ammoEmpty;
     [SerializeField]
     private GameObject[] laserBurst = new GameObject[100];
+    [SerializeField]
+    private GameObject _thrusters;
 
     //laser audio 
     [SerializeField]
@@ -48,12 +50,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _playerExplosion;
 
+    private float holdTime;
+    private bool _canUseThrusters;
 
-   
+
     // Start is called before the first frame update
     void Start()
     {
-
+        _canUseThrusters = true;
+        _thrusters.GetComponent<SpriteRenderer>().enabled = false;
         _ammoEmpty = false;
         _laserCount = 15;
         _audioSource = GetComponent<AudioSource>();
@@ -70,7 +75,7 @@ public class Player : MonoBehaviour
         }
         _uiManager.UpdateLives(_lives);
         _uiManager.UpdateAmmo(_laserCount);
-        
+
         transform.position = new Vector3(0, -3.7f, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn").GetComponent<SpawnManager>();
         if (_spawnManager == null)
@@ -82,12 +87,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_lives > 0) CalculateMovement();
 
-        
-
-        if (_lives>0) CalculateMovement();
-
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire && _ammoEmpty==false)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire && _ammoEmpty == false)
         {
             FireLaser();
             _laserCount--;
@@ -95,14 +97,13 @@ public class Player : MonoBehaviour
             {
                 _laserCount = 0;
                 _ammoEmpty = true;
-                
             }
             _uiManager.UpdateAmmo(_laserCount);
         }
     }
 
 
-   
+
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -129,31 +130,42 @@ public class Player : MonoBehaviour
         }*/
         //Math Clamp function to limit y movement
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.7f, 0), 0);
-
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-       
+
 
         if (_isSpeedUp == true)
-        {
-
-            transform.Translate(direction * speed *2* Time.deltaTime);
-
+        { 
+            transform.Translate(direction * speed * 2 * Time.deltaTime);
         }
         else
         {   //add 75% additional speed while holding Left Shift
-            if (Input.GetKey(KeyCode.LeftShift))
+            //and check for if there is a cooldown on use of thrusters
+            if (Input.GetKey(KeyCode.LeftShift) && _canUseThrusters == true)
             {
-                transform.Translate(direction * speed *1.75f* Time.deltaTime);
+                _thrusters.GetComponent<SpriteRenderer>().enabled = true;
+                transform.Translate(direction * speed * 1.75f * Time.deltaTime);
+                _uiManager.UpdateThruster();
             }
-            else transform.Translate(direction * speed * Time.deltaTime);
-
+            else
+            {
+                _thrusters.GetComponent<SpriteRenderer>().enabled = false;
+                _uiManager.UpdateThruster();
+                transform.Translate(direction * speed * Time.deltaTime);
+            }
         }
-
-        
-
-
     }
+
+    public void ThrusterOn()
+    {
+        _canUseThrusters = true;
+    }
+
+    public void ThrusterOff()
+    {
+        _canUseThrusters = false;
+    }
+
 
     void FireLaser()
     {
@@ -227,7 +239,6 @@ public class Player : MonoBehaviour
 
     IEnumerator PowerDown()
     {
-
         yield return new WaitForSeconds(5f);
         _isTripleShot = false;
     }
@@ -236,9 +247,6 @@ public class Player : MonoBehaviour
     {
         _isSpeedUp = true;
         StartCoroutine(SpeedDown());
-
-
-
     }
 
     IEnumerator SpeedDown()
@@ -251,7 +259,7 @@ public class Player : MonoBehaviour
     {
         _isShield = true;
         _playerShield.SetActive(true);
-        GetComponent<PolygonCollider2D>().enabled = false;
+        
         _shieldStrength = 3;
         _playerShield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
 

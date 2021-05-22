@@ -29,19 +29,17 @@ public class Powerup : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down * _speed * Time.deltaTime);
-
-
         if (transform.position.y < -6f)
         {
             Destroy(gameObject);
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
@@ -50,9 +48,11 @@ public class Powerup : MonoBehaviour
                 {
                     case 0:
                         player.TripleShotActive();
+                        GetComponent<CircleCollider2D>().enabled = false;
                         break;
                     case 1:
                         player.SpeedUp();
+                        GetComponent<BoxCollider2D>().enabled = false;
                         break;
                     case 2:
                         player.ShieldActive();
@@ -75,10 +75,6 @@ public class Powerup : MonoBehaviour
             }
             GetComponent<SpriteRenderer>().enabled = false;
             Destroy(gameObject, 2f);
-        }
-            
-        
+        }  
     }
-
-    
 }
