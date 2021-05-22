@@ -5,7 +5,8 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public float speed =8f;
-    private bool _isEnemyLaser = false;
+    public bool _isEnemyLaser = false;
+   
     
     // Start is called before the first frame update
     void Start()
@@ -20,14 +21,18 @@ public class Laser : MonoBehaviour
         {
             MoveUp();
         }
+            
         else MoveDown();
+
+        if(transform.position.x>11 || transform.position.x < -11 || transform.position.y>20 || transform.position.y<-20)
+        {
+            Destroy(gameObject);
+        }
 
     }
     void MoveUp()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
-
-
 
         // if object has parent, destroy parent
         if (transform.position.y > 8f)
@@ -42,11 +47,11 @@ public class Laser : MonoBehaviour
 
     }
 
+   
+
     void MoveDown()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
-
-
 
         // if object has parent, destroy parent
         if (transform.position.y < -8f)
@@ -78,6 +83,15 @@ public class Laser : MonoBehaviour
                 this.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
+        if (other.tag == "Shield" && _isEnemyLaser == true)
+        {
+            Player player = other.GetComponentInParent<Player>();
+            player.Damage();
+            this.GetComponent<BoxCollider2D>().enabled = false;
+            this.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        
+
     }
 
 

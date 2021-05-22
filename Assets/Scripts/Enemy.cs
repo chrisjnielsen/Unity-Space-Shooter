@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     private AudioClip _enemyExplosion;
     private AudioSource _audioSource;
     private float _fireRate = 3f;
-    private float _canFire = -1f;
+    private float _canFire = 3f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,29 +39,32 @@ public class Enemy : MonoBehaviour
 
         //handle for animator
         _anim = GetComponent<Animator>();
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-       if (Time.time > _canFire)
+
+        if (Time.time> _canFire +_fireRate)
         {
-            _fireRate = Random.Range(4f, 8f);
-            _canFire = Time.time + _fireRate;
+            _fireRate = Random.Range(5f,10f);
+            //Debug.Log(gameObject.name + "fire rate: " + _fireRate + " can fire: " + _canFire);
             GameObject enemyLaser = Instantiate(_enemyLaser, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            for(int i=0; i<lasers.Length; i++)
+            _canFire = Time.time;
+            for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
-
             }
-            
-            
         }
+
 
         CalculateMovement();
     }
+
+
+    
 
 
     void CalculateMovement()
@@ -74,6 +77,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
         }
+        
 
     }
 
@@ -101,8 +105,19 @@ public class Enemy : MonoBehaviour
             
             StartCoroutine(EnemyDeath());
         }
-
         
+        if (other.CompareTag("Shield"))
+        {
+
+            
+            _player.Damage();
+            _player.AddScore(Random.Range(5, 11));
+
+            StartCoroutine(EnemyDeath());
+        }
+
+
+
 
         if (other.CompareTag("Enemy"))
         {
@@ -117,7 +132,7 @@ public class Enemy : MonoBehaviour
     {
         
         _anim.SetTrigger("OnEnemyDeath");
-        _canFire = -1f;
+        _canFire =-1;
         //Animator trigger
         _audioSource.PlayOneShot(_enemyExplosion);
         Destroy(this.gameObject, 2.5f);

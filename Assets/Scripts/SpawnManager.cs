@@ -53,7 +53,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
             GameObject newEnemy = Instantiate(enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            float _pauseSpawn = Random.Range(2f, 5f);
+            float _pauseSpawn = Random.Range(2f, 7f);
             yield return new WaitForSeconds(_pauseSpawn);
         }
     }
@@ -64,8 +64,13 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawning == false)
         {
+            int randomSelection = Random.Range(0, 20);
+            
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
-            GameObject newPowerup = Instantiate(powerUps[Random.Range(0,5)], posToSpawn, Quaternion.identity);
+            if(randomSelection<15)
+                Instantiate(powerUps[Random.Range(0,5)], posToSpawn, Quaternion.identity);
+            if(randomSelection >15)
+               Instantiate(powerUps[5], posToSpawn, Quaternion.identity);
             float _powerupSpawn = Random.Range(11f, 21f);
             yield return new WaitForSeconds(_powerupSpawn);
         }

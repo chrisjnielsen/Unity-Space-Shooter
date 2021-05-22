@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     private int _laserCount;
     private bool _ammoEmpty;
+    [SerializeField]
+    private GameObject[] laserBurst = new GameObject[100];
 
     //laser audio 
     [SerializeField]
@@ -46,11 +48,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _playerExplosion;
 
+
    
     // Start is called before the first frame update
     void Start()
     {
-       
+
         _ammoEmpty = false;
         _laserCount = 15;
         _audioSource = GetComponent<AudioSource>();
@@ -96,11 +99,10 @@ public class Player : MonoBehaviour
             }
             _uiManager.UpdateAmmo(_laserCount);
         }
-
-
-
     }
 
+
+   
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -165,9 +167,6 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
             _audioSource.Play();
         }
-
-        
-        
         _nextFire = Time.time+ _fireRate;
 
 
@@ -178,8 +177,7 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         if (_isShield == true)
-        {
-            
+        {       
             _shieldStrength--;
             
             if (_shieldStrength == 2) _playerShield.GetComponent<SpriteRenderer>().color = new Color(.66f, .66f, .66f);
@@ -188,12 +186,10 @@ public class Player : MonoBehaviour
             {
                 _isShield = false;
                 _playerShield.SetActive(false);
+                GetComponent<PolygonCollider2D>().enabled = true;
 
             }
             return;
-           
-           
-
         }
 
         _lives -= 1;
@@ -215,7 +211,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             _audioSource.PlayOneShot(_playerExplosion);
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<PolygonCollider2D>().enabled = false;
             Destroy(this.gameObject,2f);
             
         }
@@ -255,6 +251,7 @@ public class Player : MonoBehaviour
     {
         _isShield = true;
         _playerShield.SetActive(true);
+        GetComponent<PolygonCollider2D>().enabled = false;
         _shieldStrength = 3;
         _playerShield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
 
@@ -276,6 +273,20 @@ public class Player : MonoBehaviour
         if (_lives == 3) _fireDamage1.SetActive(false);
         else if (_lives == 2) _fireDamage2.SetActive(false);
         _uiManager.UpdateLives(_lives);
+    }
+
+    public void SpecialPower()
+    {
+        StartCoroutine(LaserShot());   
+    }
+
+    IEnumerator LaserShot()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            laserBurst[i] = Instantiate(_laserPrefab as GameObject, transform.position, Quaternion.Euler(0, 0, 30f * i));
+            yield return new WaitForSeconds(0.15f);
+        }
     }
 
     public void AddScore(int points)

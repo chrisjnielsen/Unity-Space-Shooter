@@ -65,13 +65,16 @@ public class Powerup : MonoBehaviour
                         player.ExtraLife();
                         GetComponent<PolygonCollider2D>().enabled = false;
                         break;
+                    case 5:
+                        player.SpecialPower();
+                        GetComponent<CircleCollider2D>().enabled = false;
+                        break;
                     default:
                         break;
                 }
             }
             GetComponent<SpriteRenderer>().enabled = false;
-            
-            Destroy(gameObject,2f);
+            Destroy(gameObject, 2f);
         }
             
         
