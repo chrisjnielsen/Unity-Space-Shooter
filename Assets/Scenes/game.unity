@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 57388353}
   - component: {fileID: 57388352}
   - component: {fileID: 57388355}
+  - component: {fileID: 57388356}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -265,6 +266,18 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &57388356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57388351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b872503516097e044b2b2adffe51ec4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &71440895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1128,7 @@ MonoBehaviour:
   _tripleShotPrefab: {fileID: 8477624889396932292, guid: 0d3a7d4a12110e547b8cf657112cf09d,
     type: 3}
   _playerShield: {fileID: 2078314320}
+  mainCamera: {fileID: 57388353}
   _score: 0
   _fireDamage1: {fileID: 952622460}
   _fireDamage2: {fileID: 282573962}

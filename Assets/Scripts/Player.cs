@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     public float speed = 5f;
@@ -27,6 +28,10 @@ public class Player : MonoBehaviour
     private bool _isShield = false;
     [SerializeField]
     private GameObject _playerShield;
+
+
+    [SerializeField]
+    private GameObject mainCamera;
 
     [SerializeField]
     private int _score = 0;
@@ -54,9 +59,17 @@ public class Player : MonoBehaviour
     private bool _canUseThrusters;
 
 
+    private void Awake()
+    {
+        mainCamera = GameObject.Find("Main Camera");
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
+        
+        
         _canUseThrusters = true;
         _thrusters.GetComponent<SpriteRenderer>().enabled = false;
         _ammoEmpty = false;
@@ -203,7 +216,7 @@ public class Player : MonoBehaviour
             }
             return;
         }
-
+        mainCamera.gameObject.SendMessage("TriggerShake");
         _lives -= 1;
 
         if (_lives == 2)
