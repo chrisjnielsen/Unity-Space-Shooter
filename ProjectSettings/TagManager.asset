@@ -11,6 +11,8 @@ TagManager:
   - UI
   - Particle
   - Shield
+  - Enemy2
+  - Waypoint
   layers:
   - Default
   - TransparentFX

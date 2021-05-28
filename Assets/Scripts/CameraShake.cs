@@ -18,12 +18,10 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-
     void OnEnable()
     {
         initialPosition = transform.localPosition;
     }
-
 
     // Start is called before the first frame update
     void Start()

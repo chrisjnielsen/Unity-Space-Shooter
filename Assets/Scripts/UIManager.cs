@@ -96,7 +96,6 @@ public class UIManager : MonoBehaviour
                 _thrustIndicator.enabled = false;
                 _cooldownText.enabled = true;
             }
-
         }
         else
         {

@@ -13,6 +13,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaser;
 
+    [SerializeField]
+    List<GameObject> waypoints;
+
+    [SerializeField]
+    private int wayPointIndex = 0;
+
+   
+
+
+
     private Player _player;
 
     private Animator _anim;
@@ -23,9 +33,21 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3f;
     private float _canFire = 3f;
 
+    private SpawnManager spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (this.CompareTag("Enemy2") == true)
+        {
+            //Assign enemy waypoints to instantiated prefab
+            waypoints = GameManager.Instance.Waypoints;
+            transform.position = waypoints[wayPointIndex].transform.position;
+        }
+
+
+        spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (_player == null)
@@ -35,6 +57,8 @@ public class Enemy : MonoBehaviour
         //handle for animator
         _anim = GetComponent<Animator>();
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -51,7 +75,16 @@ public class Enemy : MonoBehaviour
                 lasers[i].AssignEnemyLaser();
             }
         }
-        CalculateMovement();
+        if (this.CompareTag("Enemy") == true)
+        {
+            CalculateMovement();
+        }
+
+        if (this.CompareTag("Enemy2") == true)
+        {
+            CalculateMovementNew();
+        }
+            
     }
 
     void CalculateMovement()
@@ -64,6 +97,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void CalculateMovementNew()
+    {
+        //enemy follows set of waypoints
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[wayPointIndex].transform.position, _speed*2 * Time.deltaTime);
+
+        if (transform.position == waypoints[wayPointIndex].transform.position) wayPointIndex += 1;
+
+        if (wayPointIndex == waypoints.Count) wayPointIndex = 0;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -92,6 +134,11 @@ public class Enemy : MonoBehaviour
             StartCoroutine(EnemyDeath());
         }
         if (other.CompareTag("Enemy"))
+        {
+            return;
+        }
+
+        if (other.CompareTag("Enemy2"))
         {
             return;
         }

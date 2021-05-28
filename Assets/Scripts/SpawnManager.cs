@@ -6,6 +6,9 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
+
+    [SerializeField]
+    private GameObject enemyPrefab2;
     [SerializeField]
     private GameObject[] powerUps;
     
@@ -16,21 +19,23 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     private bool _stopSpawning = false;
-    
 
+
+    private GameObject newEnemy;
 
     // Start is called before the first frame update
     void Start()
     {
        
-        
+
     }
 
     public void StartSpawning()
     {
-        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnEnemyRoutineType1());
+        StartCoroutine(SpawnEnemyRoutineType2());
         StartCoroutine(SpawnPowerRoutine());
-
+        //different enemy coroutine
     }
     // Update is called once per frame
     void Update()
@@ -41,23 +46,35 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    // spawn game objects every 5 seconds.
-    // create coroutine of IEnumber -- yield events
-    // while loop
+    
 
-    IEnumerator SpawnEnemyRoutine()
+    IEnumerator SpawnEnemyRoutineType1()
     {
         yield return new WaitForSeconds(2f);
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
-            GameObject newEnemy = Instantiate(enemyPrefab, posToSpawn, Quaternion.identity);
+            newEnemy = Instantiate(enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             float _pauseSpawn = Random.Range(2f, 7f);
             yield return new WaitForSeconds(_pauseSpawn);
         }
     }
 
+
+    IEnumerator SpawnEnemyRoutineType2()
+    {
+        yield return new WaitForSeconds(2f);
+        while (_stopSpawning == false)
+        {
+            //spawn at new location off screen, to be assigned to waypoint pattern handled by GameManager
+            Vector3 startpos = new Vector3(0, 15, 0);
+            GameObject newEnemy = Instantiate(enemyPrefab2, startpos, Quaternion.identity);
+            newEnemy.transform.parent = _enemyContainer.transform;
+            float _pauseSpawn = Random.Range(2f, 7f);
+            yield return new WaitForSeconds(_pauseSpawn);
+        }
+    }
 
     IEnumerator SpawnPowerRoutine()
     {
