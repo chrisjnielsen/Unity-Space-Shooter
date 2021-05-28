@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3f;
     private float _canFire = 3f;
 
-    private SpawnManager spawnManager;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +45,6 @@ public class Enemy : MonoBehaviour
             transform.position = waypoints[wayPointIndex].transform.position;
         }
 
-
-        spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (_player == null)
@@ -57,8 +54,6 @@ public class Enemy : MonoBehaviour
         //handle for animator
         _anim = GetComponent<Animator>();
     }
-
-
 
     // Update is called once per frame
     void Update()

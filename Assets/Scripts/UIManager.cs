@@ -69,9 +69,9 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.text = "Score: " + score;
     }
-    public void UpdateAmmo(int ammo)
+    public void UpdateAmmo(int ammoCurrent, int ammoTotal)
     {
-         _ammoText.text = "Ammo: " + ammo;
+         _ammoText.text = "Ammo:  " + ammoCurrent +"  /  " + ammoTotal;
     }
 
     public void UpdateThruster()

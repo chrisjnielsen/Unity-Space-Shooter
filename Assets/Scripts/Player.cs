@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _fireDamage2;
 
-    private int _laserCount;
+    private int _currentLaserCount;
+    private int _totalLaserCount;
     private bool _ammoEmpty;
     [SerializeField]
     private GameObject[] laserBurst = new GameObject[100];
@@ -73,7 +74,8 @@ public class Player : MonoBehaviour
         _canUseThrusters = true;
         _thrusters.GetComponent<SpriteRenderer>().enabled = false;
         _ammoEmpty = false;
-        _laserCount = 15;
+        _currentLaserCount = 60;
+        _totalLaserCount = 60;
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null)
         {
@@ -87,7 +89,8 @@ public class Player : MonoBehaviour
             Debug.Log("UI Manager is NULL");
         }
         _uiManager.UpdateLives(_lives);
-        _uiManager.UpdateAmmo(_laserCount);
+        _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
+        
 
         transform.position = new Vector3(0, -3.7f, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn").GetComponent<SpawnManager>();
@@ -105,13 +108,13 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire && _ammoEmpty == false)
         {
             FireLaser();
-            _laserCount--;
-            if (_laserCount < 1)
+            _currentLaserCount--;
+            if (_currentLaserCount < 1)
             {
-                _laserCount = 0;
+                _currentLaserCount = 0;
                 _ammoEmpty = true;
             }
-            _uiManager.UpdateAmmo(_laserCount);
+            _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
         }
     }
 
@@ -280,10 +283,10 @@ public class Player : MonoBehaviour
     }
     public void AmmoPowerup()
     {
-        _laserCount += 15;
+        _currentLaserCount += 15;
         _ammoEmpty = false;
-        
-        _uiManager.UpdateAmmo(_laserCount);
+        if (_currentLaserCount >= _totalLaserCount) _currentLaserCount = _totalLaserCount;
+        _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
     }
 
     public void ExtraLife()
