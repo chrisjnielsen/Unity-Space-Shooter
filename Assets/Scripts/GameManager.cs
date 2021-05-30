@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> Waypoints { get { return _wayPoints; } set { _wayPoints = value; } }
 
 
-    //Game Manager holds references to waypoints, to then assign to Enemy
+    //Game Manager can be accessed globally, holds references to waypoints, to then assign to Enemy
 
     static GameManager _instance;
     public static GameManager Instance
@@ -28,6 +28,23 @@ public class GameManager : MonoBehaviour
         set { _instance = value; }
     }
 
+    int currentEnemyCount;
+    // Getter Setter for tracking enemy count and advancing the spawn waves
+    public int CurrentEnemyCount
+    {
+        get { return currentEnemyCount; }
+        set
+        {
+            currentEnemyCount = value;
+            if (currentEnemyCount <= 0)
+            {
+                SpawnScriptObj.Instance._currentWave++;
+                SpawnScriptObj.Instance.StartEnemySpawnWaves();
+                
+            }
+        }
+    }
+
     void Awake()
     {
         Instance = this;
@@ -36,8 +53,8 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        GameObject gameObjects = GameObject.Find("WaypointContainer");
+    {//find Waypoints to assign to Enemy that are instantiated prefabs
+        GameObject gameObjects = GameObject.Find("WaypointContainer1");
        
         foreach(Transform child in gameObjects.transform)
         {

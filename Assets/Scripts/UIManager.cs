@@ -25,6 +25,13 @@ public class UIManager : MonoBehaviour
     private Text _restartText;
     [SerializeField]
     private Text _cooldownText;
+    [SerializeField]
+    private Text _waveText;
+    [SerializeField]
+    private Text _enemyText;
+    [SerializeField]
+    private Text _waveScreenText;
+
 
     [Header("Variables")]
     [SerializeField]
@@ -33,6 +40,9 @@ public class UIManager : MonoBehaviour
     private float _maxThrusterTimer = 1f;
     [SerializeField]
     private KeyCode _selectKey = KeyCode.LeftShift;
+    
+    private int wavecurrent;
+    private int wavetotal;
 
 
     private bool _shouldUpdateThruster = false;
@@ -52,17 +62,54 @@ public class UIManager : MonoBehaviour
         _cooldownText.enabled = false;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
-        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-        if (_gameManager == null)
-        {
-            Debug.LogError("Game Manager is NULL");
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void UpdateWaveScreenText()
+    {
+        if (wavecurrent < wavetotal) StartCoroutine(ShowWaveText(wavecurrent));
+        if (wavecurrent == wavetotal) StartCoroutine(ShowWaveCompleteText());
+    }
+
+    IEnumerator ShowWaveText(int currentwave)
+    {
+        _waveScreenText.gameObject.SetActive(true);
+        _waveScreenText.text = "Wave " + currentwave + " Complete! Next Wave...";
+        yield return new WaitForSeconds(2f);
+        _waveScreenText.gameObject.SetActive(false);
+
+    }
+
+    IEnumerator ShowWaveCompleteText()
+    {
+        _waveScreenText.gameObject.SetActive(true);
+        _waveScreenText.text = "All Waves Completed! Good Job!";
+        yield return null;
+    }
+
+    
+
+    public void UpdateEnemyCount()
+    {
+        
+        _enemyText.text = "Enemies: " + (GameManager.Instance.CurrentEnemyCount);
+        if (GameManager.Instance.CurrentEnemyCount == 0)
+        {
+            UpdateWaveScreenText();
+            return;
+        }
+    }
+
+    public void UpdateWaves(int waveCurrent, int waveTotal)
+    {
+        wavecurrent = waveCurrent;
+        wavetotal = waveTotal;
+        _waveText.text = "Wave:  " + waveCurrent + "  /  " + waveTotal;
     }
 
     public void UpdateScore(int score)
@@ -138,7 +185,7 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlicker());
-        _gameManager.GameOver();
+        GameManager.Instance.GameOver();
     }
 
 

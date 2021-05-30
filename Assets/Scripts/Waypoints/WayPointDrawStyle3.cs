@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class WayPointDraw : MonoBehaviour
+public class WayPointDrawStyle3 : MonoBehaviour
 {
 
     [SerializeField]
@@ -11,6 +11,7 @@ public class WayPointDraw : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
         for (int i = 0, j=i+1; i < waypoints.Length-1; i++, j++)
         {   //Draw waypoints from point a to b sequentially
             Gizmos.DrawSphere(waypoints[i].transform.position, 0.4f);

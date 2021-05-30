@@ -19,8 +19,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int wayPointIndex = 0;
 
-   
 
+    private UIManager _uiManager;
 
 
     private Player _player;
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     private float _fireRate = 3f;
     private float _canFire = 3f;
-
+    
     
 
     // Start is called before the first frame update
@@ -53,15 +53,20 @@ public class Enemy : MonoBehaviour
         }
         //handle for animator
         _anim = GetComponent<Animator>();
+
+        _uiManager = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.Log("UI Manager is NULL");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time> _canFire +_fireRate)
+        if (Time.time> _canFire +_fireRate && _player!=null)
         {
-            _fireRate = Random.Range(5f,10f);
-            //Debug.Log(gameObject.name + "fire rate: " + _fireRate + " can fire: " + _canFire);
+            _fireRate = Random.Range(2f,6f);
             GameObject enemyLaser = Instantiate(_enemyLaser, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
             _canFire = Time.time;
@@ -96,9 +101,7 @@ public class Enemy : MonoBehaviour
     {
         //enemy follows set of waypoints
         transform.position = Vector3.MoveTowards(transform.position, waypoints[wayPointIndex].transform.position, _speed*2 * Time.deltaTime);
-
         if (transform.position == waypoints[wayPointIndex].transform.position) wayPointIndex += 1;
-
         if (wayPointIndex == waypoints.Count) wayPointIndex = 0;
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -128,6 +131,7 @@ public class Enemy : MonoBehaviour
             _player.AddScore(Random.Range(5, 11));
             StartCoroutine(EnemyDeath());
         }
+        
         if (other.CompareTag("Enemy"))
         {
             return;
@@ -139,14 +143,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
     IEnumerator EnemyDeath()
-    {
+    {   // update number of enemies in wave, and update UI
+        GameManager.Instance.CurrentEnemyCount--;
+        _uiManager.UpdateEnemyCount();
         _anim.SetTrigger("OnEnemyDeath");
-        GetComponent<PolygonCollider2D>().enabled = false;
+        GetComponent<PolygonCollider2D>().enabled = false; // disable collider on death cycle so no more chance they will cause damage to Player
         _canFire =-1;
         //Animator trigger
         _audioSource.PlayOneShot(_enemyExplosion);
-        Destroy(this.gameObject, 2.5f);
+        Destroy(this.gameObject, 2f);
         yield return null;
     }
 }

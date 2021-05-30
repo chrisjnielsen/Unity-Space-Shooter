@@ -118,8 +118,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -135,15 +133,6 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(xMax, transform.position.y, 0);
         }
 
-        /*if (transform.position.y >= 0)
-        {
-            transform.position = new Vector3(transform.position.x, 0, 0);
-        }
-
-        else if (transform.position.y <= -3.7f)
-        {
-            transform.position = new Vector3(transform.position.x, -3.7f, 0);
-        }*/
         //Math Clamp function to limit y movement
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.7f, 0), 0);
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
@@ -215,10 +204,10 @@ public class Player : MonoBehaviour
                 _isShield = false;
                 _playerShield.SetActive(false);
                 GetComponent<PolygonCollider2D>().enabled = true;
-
             }
             return;
         }
+        // camera shake effect called
         mainCamera.gameObject.SendMessage("TriggerShake");
         _lives -= 1;
 
@@ -241,9 +230,7 @@ public class Player : MonoBehaviour
             _audioSource.PlayOneShot(_playerExplosion);
             GetComponent<PolygonCollider2D>().enabled = false;
             Destroy(this.gameObject,2f);
-            
         }
-
     }
 
    
@@ -278,8 +265,6 @@ public class Player : MonoBehaviour
         
         _shieldStrength = 3;
         _playerShield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
-
-
     }
     public void AmmoPowerup()
     {
@@ -291,7 +276,6 @@ public class Player : MonoBehaviour
 
     public void ExtraLife()
     {
-        
         _lives = _lives + 1;
         //turn back off damage visuals if life restored
         if (_lives == 3) _fireDamage1.SetActive(false);

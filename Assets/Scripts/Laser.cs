@@ -24,7 +24,7 @@ public class Laser : MonoBehaviour
             
         else MoveDown();
 
-        if(transform.position.x>11 || transform.position.x < -11 || transform.position.y>20 || transform.position.y<-20)
+        if(transform.position.x>15 || transform.position.x < -15 || transform.position.y>20 || transform.position.y<-20)
         {
             Destroy(gameObject);
         }
