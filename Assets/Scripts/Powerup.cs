@@ -12,6 +12,8 @@ public class Powerup : MonoBehaviour
     //2 for shields
     //3 for ammo
     //4 for extra life
+    //5 for Special bullet attack
+    //6 for NEGATIVE Speed
     [SerializeField]
     private int powerupID;
     [SerializeField]
@@ -68,6 +70,10 @@ public class Powerup : MonoBehaviour
                     case 5:
                         player.SpecialPower();
                         GetComponent<CircleCollider2D>().enabled = false;
+                        break;
+                    case 6:
+                        player.NegativeSpeed();
+                        GetComponent<BoxCollider2D>().enabled = false;
                         break;
                     default:
                         break;

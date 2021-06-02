@@ -47,8 +47,6 @@ public class UIManager : MonoBehaviour
 
     private bool _shouldUpdateThruster = false;
 
-    private GameManager _gameManager;
-
     private Player player;
 
     // Start is called before the first frame update
@@ -101,7 +99,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.CurrentEnemyCount == 0)
         {
             UpdateWaveScreenText();
-            return;
+            
         }
     }
 

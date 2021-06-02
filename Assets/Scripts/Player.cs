@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     private bool _isSpeedUp = false;
+    private bool _isNegativeSpeed = false;
     private bool _isShield = false;
     [SerializeField]
     private GameObject _playerShield;
@@ -137,11 +138,16 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.7f, 0), 0);
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
+       
 
 
         if (_isSpeedUp == true)
         { 
             transform.Translate(direction * speed * 2 * Time.deltaTime);
+        }
+        else if (_isNegativeSpeed == true)
+        {
+            transform.Translate(direction * speed * 0.1f * Time.deltaTime);
         }
         else
         {   //add 75% additional speed while holding Left Shift
@@ -255,7 +261,16 @@ public class Player : MonoBehaviour
     IEnumerator SpeedDown()
     {
         yield return new WaitForSeconds(5f);
+        _canUseThrusters = true;
+        _isNegativeSpeed = false;
         _isSpeedUp = false;
+    }
+
+    public void NegativeSpeed()
+    {
+        _isNegativeSpeed = true;
+        _canUseThrusters = false;
+        StartCoroutine(SpeedDown());
     }
 
     public void ShieldActive()
