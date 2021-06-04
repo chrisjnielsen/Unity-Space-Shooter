@@ -18,7 +18,8 @@ public class SpawnManager : MonoBehaviour
     private float xMin = -9f;
     [SerializeField]
     //private GameObject _enemyContainer;
-    private bool _stopSpawning = false;
+
+    public bool stopSpawning = false;
     
 
     UIManager _uiManager;
@@ -50,7 +51,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnPowerRoutine()
     {
         yield return new WaitForSeconds(2f);
-        while (_stopSpawning == false)
+        while (stopSpawning == false)
         {
             int randomSelection = Random.Range(0, 30);
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
@@ -65,14 +66,9 @@ public class SpawnManager : MonoBehaviour
         }   
     }
 
-    public void PlayerWin()
+   public void StopSpawn()
     {
-        _stopSpawning = true;
-    }
-
-    public void OnPlayerDeath()
-    {
-        _stopSpawning = true;
+        stopSpawning = true;
     }
 
 }

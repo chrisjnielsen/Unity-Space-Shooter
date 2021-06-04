@@ -232,7 +232,7 @@ public class Player : MonoBehaviour
         
         if (_lives < 1)
         {
-            _spawnManager.OnPlayerDeath();
+            SpawnScriptObj.Instance.OnPlayerDeath();
             _audioSource.PlayOneShot(_playerExplosion);
             GetComponent<PolygonCollider2D>().enabled = false;
             Destroy(this.gameObject,2f);

@@ -37,6 +37,7 @@ public class SpawnScriptObj : MonoBehaviour
 
     public static int enemyCount;
 
+    private bool _stopSpawning = false;
 
     private void Awake()
     {
@@ -72,9 +73,9 @@ public class SpawnScriptObj : MonoBehaviour
 
         if (_currentWave == _waves.Count)
         {
-            _spawnManager.PlayerWin();
+            PlayerWin();
         }
-        else
+        else if(_stopSpawning==false)
         {
             var currentWave = _waves[_currentWave].sequence;
             enemyCount = currentWave.Count;
@@ -85,10 +86,24 @@ public class SpawnScriptObj : MonoBehaviour
             foreach (var obj in currentWave)
             {
                 Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
-                Instantiate(obj, posToSpawn, Quaternion.identity);
+                GameObject newEnemy = Instantiate(obj, posToSpawn, Quaternion.identity);
+                newEnemy.transform.parent = _enemyContainer.transform;
                 float _pauseSpawn = Random.Range(2f, 7f);
                 yield return new WaitForSeconds(_pauseSpawn);
             }
         }
+    }
+
+
+    public void PlayerWin()
+    {
+        _stopSpawning = true;
+        _spawnManager.StopSpawn();
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
+        _spawnManager.StopSpawn();
     }
 }

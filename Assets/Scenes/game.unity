@@ -1470,6 +1470,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1062dc7d40ee895458a15f9842edf875, type: 2}
   - {fileID: 11400000, guid: 030a62ff1e0fb8243aeb837d1b82fd5e, type: 2}
   - {fileID: 11400000, guid: c225fa3337dc38b47bc5df3231b3810d, type: 2}
+  - {fileID: 11400000, guid: a8c373e966ec0ba428017e64a0adc100, type: 2}
   _currentWave: 0
   xMax: 9
   xMin: -9

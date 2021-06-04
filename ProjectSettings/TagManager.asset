@@ -13,6 +13,7 @@ TagManager:
   - Shield
   - Enemy2
   - Waypoint
+  - Explosion
   layers:
   - Default
   - TransparentFX
