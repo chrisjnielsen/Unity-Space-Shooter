@@ -342,13 +342,10 @@ MonoBehaviour:
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 0}
+  _shieldPrefab: {fileID: 4742559203696429566, guid: e84beecb830f79445a3c9de476c5e4d8,
+    type: 3}
   waypoints: []
   wayPointIndex: 0
-  _uiManager: {fileID: 0}
-  _player: {fileID: 0}
-  _anim: {fileID: 0}
-  _enemyExplosion: {fileID: 0}
-  _audioSource: {fileID: 0}
   _fireRate: 3
   _canFire: 3
   rotationSpeed: 5

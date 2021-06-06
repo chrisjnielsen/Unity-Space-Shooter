@@ -13,6 +13,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject _enemyLaser;
     [SerializeField]
+    protected GameObject _shieldPrefab;
+    [SerializeField]
     protected List<GameObject> waypoints;
     [SerializeField]
     protected int wayPointIndex = 0;
@@ -25,6 +27,8 @@ public abstract class Enemy : MonoBehaviour
     protected float _fireRate = 3f;
     [SerializeField]
     protected float _canFire = 3f;
+    [SerializeField]
+    protected bool _hasShield = false;
     
     // Start is called before the first frame update
     public virtual void Start()
@@ -44,6 +48,17 @@ public abstract class Enemy : MonoBehaviour
         {
             Debug.Log("UI Manager is NULL");
         }
+        
+        if (Random.Range(0, 50) > 40)
+        {
+            GameObject enemyShield = Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
+            enemyShield.transform.parent = this.transform;
+            enemyShield.GetComponent<Shield>().ShieldOn();
+            this.GetComponent<PolygonCollider2D>().enabled = false;
+            _hasShield = true;
+        }
+
+
     }
 
     public virtual void Update()
@@ -63,40 +78,57 @@ public abstract class Enemy : MonoBehaviour
    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            
-            if (_player != null)
-            {
-                GetComponent<PolygonCollider2D>().enabled = false;
-                _player.Damage();   
-            }
-            StartCoroutine(EnemyDeath());
-        }
 
-        if (other.CompareTag("Laser"))
+        switch (other.gameObject.tag)
         {
-            Destroy(other.gameObject);
-            GetComponent<PolygonCollider2D>().enabled=false;
-            _player.AddScore(Random.Range(5, 11));
-            StartCoroutine(EnemyDeath());
-        }
-        
-        if (other.CompareTag("Shield"))
-        {
-            _player.Damage();
-            _player.AddScore(Random.Range(5, 11));
-            StartCoroutine(EnemyDeath());
-        }
-        
-        if (other.CompareTag("Enemy"))
-        {
-            return;
-        }
-
-        if (other.CompareTag("Enemy2"))
-        {
-            return;
+            case "Player":
+                if(_hasShield == true)
+                { 
+                    _player.Damage();
+                    _hasShield = false;
+                }
+                else if (_hasShield == false)
+                {
+                    GetComponent<PolygonCollider2D>().enabled = false;
+                    _player.Damage();
+                    StartCoroutine(EnemyDeath());
+                }
+                break;
+            case "Laser":
+                if(_hasShield == true)
+                {
+                    Destroy(other.gameObject);
+                    _hasShield = false;
+                }
+                else if (_hasShield == false)
+                {
+                    Destroy(other.gameObject);
+                    GetComponent<PolygonCollider2D>().enabled = false;
+                    _player.AddScore(Random.Range(5, 11));
+                    StartCoroutine(EnemyDeath());
+                }
+                break;
+            case "Shield":
+                if(_hasShield == true)
+                {
+                    _hasShield = false;
+                    return;
+                }
+                else if (_hasShield == false)
+                {
+                    _player.Damage();
+                    _player.AddScore(Random.Range(5, 11));
+                    StartCoroutine(EnemyDeath());
+                }
+                break;
+            case "Enemy":
+                return;
+                
+            case "Enemy2":
+                return;
+                
+            default:
+                break;
         }
     }
 
