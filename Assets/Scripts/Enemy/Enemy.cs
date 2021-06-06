@@ -4,41 +4,31 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    [SerializeField]
+    protected float _speed = 4f;
+    [SerializeField]
+    protected float xMax = 9f;
+    [SerializeField]
+    protected float xMin = -9f;
+    [SerializeField]
+    protected GameObject _enemyLaser;
+    [SerializeField]
+    protected List<GameObject> waypoints;
+    [SerializeField]
+    protected int wayPointIndex = 0;
+    protected UIManager _uiManager;
+    protected Player _player;
+    protected Animator _anim;
+    protected AudioClip _enemyExplosion;
+    protected AudioSource _audioSource;
+    [SerializeField]
+    protected float _fireRate = 3f;
+    [SerializeField]
+    protected float _canFire = 3f;
     
-    public float _speed = 4f;
-    
-    public float xMax = 9f;
-    
-    public float xMin = -9f;
-    
-    public GameObject _enemyLaser;
-
-    
-    public List<GameObject> waypoints;
-
-    
-    public int wayPointIndex = 0;
-
-
-    public UIManager _uiManager;
-
-
-    public Player _player;
-
-    public Animator _anim;
-    
-    public AudioClip _enemyExplosion;
-    public AudioSource _audioSource;
-    public float _fireRate = 3f;
-    public float _canFire = 3f;
-    
-    
-
     // Start is called before the first frame update
-    public void Start()
-    {
-
-        
+    public virtual void Start()
+    { 
         _audioSource = GetComponent<AudioSource>();
 
         if (_player == null)
@@ -56,7 +46,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (Time.time> _canFire +_fireRate && _player!=null)
         {
@@ -75,11 +65,11 @@ public abstract class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player player = other.GetComponent<Player>();
-            if (player != null)
+            
+            if (_player != null)
             {
                 GetComponent<PolygonCollider2D>().enabled = false;
-                player.Damage();   
+                _player.Damage();   
             }
             StartCoroutine(EnemyDeath());
         }

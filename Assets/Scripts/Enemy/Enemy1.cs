@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class Enemy1 : Enemy
 {
-    // Start is called before the first frame update
-    new void Start()
+    public override void Start()
     {
         base.Start();
     }
 
-    // Update is called once per frame
-    new void Update()
+    public override void Update()
     {
         base.Update();
-
         CalculateMovement();
-
     }
-
 
     void CalculateMovement()
     {

@@ -4,43 +4,27 @@ using UnityEngine;
 
 public class Enemy3 : Enemy
 {
-
     public float rotationSpeed = 5; //speed of turning
-
     public Transform ObjToFollow = null;
     public bool FollowPlayer = false;
-    void Awake()
-    {
-       
-    }
-
-
-
-    // Start is called before the first frame update
-    new void Start()
+    
+    public override void Start()
     {
         base.Start();
-
         if (!FollowPlayer) { return; }
-
         if (_player != null)
         {
             ObjToFollow = _player.transform;
         }
     }
-
-    // Update is called once per frame
-    new void Update()
+    public override void Update()
     {
-
         if(_player != null)
         {
-
             if (Vector3.Distance(_player.transform.position, transform.position) != 0)
             {
                 // Get a direction vector from us to the target
                 Vector3 dir = _player.transform.position - transform.position;
-
                 // Normalize it so that it's a unit direction vector
                 dir.Normalize();
                 RotateTowards(_player.transform.position);
