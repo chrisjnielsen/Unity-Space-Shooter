@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+   
+
     [SerializeField]
     protected float _speed = 4f;
     [SerializeField]
@@ -29,10 +31,20 @@ public abstract class Enemy : MonoBehaviour
     protected float _canFire = 3f;
     [SerializeField]
     protected bool _hasShield = false;
+    [SerializeField]
+    protected bool _followPlayer = false;
+    [SerializeField]
+    protected Vector3 _startPosition;
+    [SerializeField]
+    protected Quaternion _startRotation;
+    protected Quaternion _originalRotationValue;
+    protected float _rotateSpeed = 1f;
+
     
     // Start is called before the first frame update
     public virtual void Start()
-    { 
+    {
+        _originalRotationValue = transform.rotation;
         _audioSource = GetComponent<AudioSource>();
 
         if (_player == null)
@@ -54,7 +66,6 @@ public abstract class Enemy : MonoBehaviour
             GameObject enemyShield = Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
             enemyShield.transform.parent = this.transform;
             enemyShield.GetComponent<Shield>().ShieldOn();
-            this.GetComponent<PolygonCollider2D>().enabled = false;
             _hasShield = true;
         }
 
@@ -73,9 +84,56 @@ public abstract class Enemy : MonoBehaviour
             {
                 lasers[i].AssignEnemyLaser();
             }
-        }       
+        }
+
+        if(_player != null)
+        {
+            if (Vector3.Distance(_player.transform.position, transform.position) > 4f) _followPlayer = false;
+            if (Vector3.Distance(_player.transform.position, transform.position) <= 4f) _followPlayer = true;
+            CalculateMovement();
+        }
+      
+        
     }
-   
+
+    public virtual void CalculateMovement()
+    {
+        switch (_followPlayer)
+        {
+            case true:
+                // Get a direction vector from us to the target
+                Vector3 dir = _player.transform.position - transform.position;
+                // Normalize it so that it's a unit direction vector
+                dir.Normalize();
+                RotateTowards(_player.transform.position);
+                // Move ourselves in that direction
+                transform.position += dir * _speed * Time.deltaTime;
+                break;
+            case false:
+                //restore default rotation and movement
+                transform.rotation = Quaternion.Slerp(transform.rotation, _originalRotationValue, Time.deltaTime * _speed);
+                transform.Translate(new Vector3(0,-1,0) * _speed * Time.deltaTime);
+                if (transform.position.y < -7f)
+                {
+                    transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
+                }
+                break;
+            
+        }
+        //for later: if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
+        
+    }
+
+
+    public virtual void RotateTowards(Vector2 target)
+    {
+        var offset = 90f;
+        Vector2 direction = target - (Vector2)transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -139,6 +197,7 @@ public abstract class Enemy : MonoBehaviour
         _uiManager.UpdateEnemyCount();
         _anim.SetTrigger("OnEnemyDeath");
         GetComponent<PolygonCollider2D>().enabled = false; // disable collider on death cycle so no more chance they will cause damage to Player
+        transform.Translate(Vector2.zero);       
         _canFire =-1;
         //Animator trigger
         _audioSource.Play();

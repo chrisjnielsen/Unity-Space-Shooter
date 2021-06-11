@@ -20,14 +20,12 @@ public class Shield : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ShieldOff();
-            GetComponentInParent<PolygonCollider2D>().enabled = true;
         }
 
         if (other.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
             ShieldOff();
-            GetComponentInParent<PolygonCollider2D>().enabled = true;
         }
     }
 }

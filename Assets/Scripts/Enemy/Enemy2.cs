@@ -13,11 +13,11 @@ public class Enemy2 : Enemy
     public override  void Update()
     {
         base.Update();
-        CalculateMovementNew();
+        
     }
-    void CalculateMovementNew()
+    public override void CalculateMovement()
     {
-        //enemy follows set of waypoints
+        //enemy follows set of waypoints instead of basic movement
         transform.position = Vector3.MoveTowards(transform.position, waypoints[wayPointIndex].transform.position, _speed * 2 * Time.deltaTime);
         if (transform.position == waypoints[wayPointIndex].transform.position) wayPointIndex += 1;
         if (wayPointIndex == waypoints.Count) wayPointIndex = 0;

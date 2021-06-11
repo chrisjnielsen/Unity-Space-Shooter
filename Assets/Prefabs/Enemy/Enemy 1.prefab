@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8913484360857975046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baeae48f732027b49b9750f3884c6426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 2.5
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 8421449660824297776, guid: 612d0f7d38e670f4b89cd2caf2613748,
@@ -347,3 +347,4 @@ MonoBehaviour:
   wayPointIndex: 0
   _fireRate: 3
   _canFire: 3
+  _hasShield: 0

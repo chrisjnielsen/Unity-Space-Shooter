@@ -40,10 +40,10 @@ public class Enemy3 : Enemy
     }
 
 
-    private void RotateTowards(Vector2 target)
+    private void RotateTowards(Vector3 target)
     {
         var offset = 90f;
-        Vector2 direction = target - (Vector2)transform.position;
+        Vector3 direction = target - (Vector3)transform.position;
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));

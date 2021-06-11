@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
         }
 
         //Math Clamp function to limit y movement
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.7f, 0), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.7f, 4f), 0);
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
        

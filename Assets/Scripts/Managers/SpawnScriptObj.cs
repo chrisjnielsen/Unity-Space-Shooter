@@ -47,7 +47,6 @@ public class SpawnScriptObj : MonoBehaviour
     private void Start()
     {
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn").GetComponent<SpawnManager>();
-
         _currentWave = 0;
         _uiManager = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UIManager>();
         if (_uiManager == null)
@@ -56,7 +55,6 @@ public class SpawnScriptObj : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -70,12 +68,13 @@ public class SpawnScriptObj : MonoBehaviour
     IEnumerator StartWaveRoutine()
     {
         yield return new WaitForSeconds(2f);
-
         if (_currentWave == _waves.Count)
         {
             PlayerWin();
         }
-        else if (_stopSpawning == false)
+
+        else if (_stopSpawning == true) yield return null;
+        else 
         {
             var currentWave = _waves[_currentWave].sequence;
             enemyCount = currentWave.Count;
@@ -92,7 +91,7 @@ public class SpawnScriptObj : MonoBehaviour
                 yield return new WaitForSeconds(_pauseSpawn);
             }
         }
-        else if (_stopSpawning == true) yield break;
+        
     }
 
 
@@ -105,6 +104,7 @@ public class SpawnScriptObj : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+        StopAllCoroutines();
         _spawnManager.StopSpawn();
     }
 }
