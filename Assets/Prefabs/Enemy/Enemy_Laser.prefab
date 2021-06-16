@@ -109,6 +109,11 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.018003225
       objectReference: {fileID: 0}
+    - target: {fileID: 4009035796253362968, guid: a3dab95409f6f6d4994aac6f47a10eed,
+        type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5282482536591201292, guid: a3dab95409f6f6d4994aac6f47a10eed,
         type: 3}
       propertyPath: m_Name
@@ -188,6 +193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009035796253362968, guid: a3dab95409f6f6d4994aac6f47a10eed,
+        type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5282482536591201292, guid: a3dab95409f6f6d4994aac6f47a10eed,
         type: 3}

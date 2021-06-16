@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
    
 
     [SerializeField]
-    protected float _speed = 4f;
+    protected float _speed = 2.5f;
     [SerializeField]
     protected float xMax = 9f;
     [SerializeField]
@@ -88,8 +88,8 @@ public abstract class Enemy : MonoBehaviour
 
         if(_player != null)
         {
-            if (Vector3.Distance(_player.transform.position, transform.position) > 4f) _followPlayer = false;
-            if (Vector3.Distance(_player.transform.position, transform.position) <= 4f) _followPlayer = true;
+            if (Vector3.Distance(_player.transform.position, transform.position) > 3f) _followPlayer = false;
+            if (Vector3.Distance(_player.transform.position, transform.position) <= 3f) _followPlayer = true;
             CalculateMovement();
         }
       
@@ -195,13 +195,15 @@ public abstract class Enemy : MonoBehaviour
     {   // update number of enemies in wave, and update UI
         GameManager.Instance.CurrentEnemyCount--;
         _uiManager.UpdateEnemyCount();
+        transform.Translate(Vector3.zero);
+        //Animator trigger
         _anim.SetTrigger("OnEnemyDeath");
         GetComponent<PolygonCollider2D>().enabled = false; // disable collider on death cycle so no more chance they will cause damage to Player
-        transform.Translate(Vector2.zero);       
+           
         _canFire =-1;
-        //Animator trigger
+        
         _audioSource.Play();
-        Destroy(this.gameObject, 2f);
+        Destroy(this.gameObject, 1.6f);
         yield return null;
     }
 }

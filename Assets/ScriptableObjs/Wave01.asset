@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wave01
   m_EditorClassIdentifier: 
   sequence:
-  - {fileID: 8913484360857975046, guid: 55b8adbfc5accb847b9521ab72fc0153, type: 3}
-  - {fileID: 8913484360857975046, guid: 55b8adbfc5accb847b9521ab72fc0153, type: 3}
+  - {fileID: 4280571851341502661, guid: c16137fe73d42434780f83927e9b639f, type: 3}
+  - {fileID: 4280571851341502661, guid: c16137fe73d42434780f83927e9b639f, type: 3}
   - {fileID: 8913484360857975046, guid: 55b8adbfc5accb847b9521ab72fc0153, type: 3}
   - {fileID: 8913484360857975046, guid: 55b8adbfc5accb847b9521ab72fc0153, type: 3}
   - {fileID: 8913484360857975046, guid: 55b8adbfc5accb847b9521ab72fc0153, type: 3}
