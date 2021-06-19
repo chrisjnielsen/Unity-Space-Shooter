@@ -81,6 +81,10 @@ public class Powerup : MonoBehaviour
             }
             GetComponent<SpriteRenderer>().enabled = false;
             Destroy(gameObject, 2f);
-        }  
+        }
+        else if (other.CompareTag("EnemyLaser"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

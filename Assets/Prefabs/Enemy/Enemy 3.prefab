@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 354f773b1527ed3409c354ab7ccbb322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2.5
+  _speed: 3
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 0}
@@ -349,6 +349,10 @@ MonoBehaviour:
   _fireRate: 3
   _canFire: 3
   _hasShield: 0
+  _followPlayer: 0
+  _startPosition: {x: 0, y: 0, z: 0}
+  _distToPowerup: 3
+  _startRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
   ObjToFollow: {fileID: 0}
   FollowPlayer: 1

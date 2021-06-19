@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5889877417543464099}
   m_Layer: 0
   m_Name: laserBlue01
-  m_TagString: Enemy
+  m_TagString: EnemyLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14dc58fba36b91242a48a4e8bc799ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   _isEnemyLaser: 0
   _isBackwards: 0

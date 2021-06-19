@@ -36,8 +36,11 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     protected Vector3 _startPosition;
     [SerializeField]
+    protected int _distToPowerup = 10;
+    [SerializeField]
     protected Quaternion _startRotation;
     protected Quaternion _originalRotationValue;
+    protected Rigidbody2D rb;
     protected float _rotateSpeed = 1f;
 
     
@@ -60,7 +63,7 @@ public abstract class Enemy : MonoBehaviour
         {
             Debug.Log("UI Manager is NULL");
         }
-        
+
         if (Random.Range(0, 50) > 40)
         {
             GameObject enemyShield = Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
@@ -68,8 +71,6 @@ public abstract class Enemy : MonoBehaviour
             enemyShield.GetComponent<Shield>().ShieldOn();
             _hasShield = true;
         }
-
-
     }
 
     public virtual void Update()
@@ -92,8 +93,7 @@ public abstract class Enemy : MonoBehaviour
             if (Vector3.Distance(_player.transform.position, transform.position) <= 3f) _followPlayer = true;
             CalculateMovement();
         }
-      
-        
+        CheckHitPowerUp();
     }
 
     public virtual void CalculateMovement()
@@ -136,60 +136,84 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        switch (other.gameObject.tag)
-        {
-            case "Player":
-                if(_hasShield == true)
-                { 
-                    _player.Damage();
-                    _hasShield = false;
-                }
-                else if (_hasShield == false)
-                {
-                    GetComponent<PolygonCollider2D>().enabled = false;
-                    _player.Damage();
-                    StartCoroutine(EnemyDeath());
-                }
-                break;
-            case "Laser":
-                if(_hasShield == true)
-                {
-                    Destroy(other.gameObject);
-                    _hasShield = false;
-                }
-                else if (_hasShield == false)
-                {
-                    Destroy(other.gameObject);
-                    GetComponent<PolygonCollider2D>().enabled = false;
-                    _player.AddScore(Random.Range(5, 11));
-                    StartCoroutine(EnemyDeath());
-                }
-                break;
-            case "Shield":
-                if(_hasShield == true)
-                {
-                    _hasShield = false;
+       switch (other.gameObject.tag)
+            {
+                case "Player":
+                    if (_hasShield == true)
+                    {
+                        _player.Damage();
+                        _hasShield = false;
+                    }
+                    else if (_hasShield == false)
+                    {
+                        GetComponent<PolygonCollider2D>().enabled = false;
+                        _player.Damage();
+                        StartCoroutine(EnemyDeath());
+                    }
+                    break;
+                case "Laser":
+                    if (_hasShield == true)
+                    {
+                        Destroy(other.gameObject);
+                        _hasShield = false;
+                    }
+                    else if (_hasShield == false)
+                    {
+                        Destroy(other.gameObject);
+                        GetComponent<PolygonCollider2D>().enabled = false;
+                        _player.AddScore(Random.Range(5, 11));
+                        StartCoroutine(EnemyDeath());
+                    }
+                    break;
+                case "Shield":
+                    if (_hasShield == true)
+                    {
+                        _hasShield = false;
+                        return;
+                    }
+                    else if (_hasShield == false)
+                    {
+                        _player.Damage();
+                        _player.AddScore(Random.Range(5, 11));
+                        StartCoroutine(EnemyDeath());
+                    }
+                    break;
+                case "Enemy":
                     return;
-                }
-                else if (_hasShield == false)
-                {
-                    _player.Damage();
-                    _player.AddScore(Random.Range(5, 11));
-                    StartCoroutine(EnemyDeath());
-                }
-                break;
-            case "Enemy":
-                return;
-                
-            case "Enemy2":
-                return;
-                
-            default:
-                break;
-        }
+
+                case "Enemy2":
+                    return;
+
+                default:
+                    break;   
+       } 
     }
 
+    void CheckHitPowerUp()
+    {        
+        RaycastHit2D hit;
+        Debug.DrawRay(transform.position, Vector3.down * _distToPowerup);
+        hit = Physics2D.Raycast(transform.position, Vector2.down,_distToPowerup);
+
+        if (hit.collider == null)
+        {
+            return;
+        }
+        else if (hit.collider.tag == "Powerup")
+        {
+            if (Time.time > _canFire + _fireRate)
+            {
+                _fireRate = Random.Range(0f, 1f);
+                GameObject enemyLaser = Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+                Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+                _canFire = Time.time;
+                for (int i = 0; i < lasers.Length; i++)
+                {
+                    lasers[i].AssignEnemyLaser();
+                }
+            }
+        } 
+    }
 
     IEnumerator EnemyDeath()
     {   // update number of enemies in wave, and update UI

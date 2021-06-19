@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be983f713ac0cf47bfe9d3adc723a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2.5
+  _speed: 3
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 4660096438722571426, guid: 4e3e5e8930e38f74cb02e07e37e1ad1d,
@@ -133,6 +133,7 @@ MonoBehaviour:
   _hasShield: 0
   _followPlayer: 0
   _startPosition: {x: 0, y: 0, z: 0}
+  _distToPowerup: 3
   _startRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!82 &7961873863526012919
 AudioSource:
