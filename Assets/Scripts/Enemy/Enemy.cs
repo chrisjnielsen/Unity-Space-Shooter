@@ -109,21 +109,22 @@ public abstract class Enemy : MonoBehaviour
                 // Move ourselves in that direction
                 transform.position += dir * _speed * Time.deltaTime;
                 break;
-            case false:
+            case false:  
                 //restore default rotation and movement
                 transform.rotation = Quaternion.Slerp(transform.rotation, _originalRotationValue, Time.deltaTime * _speed);
-                transform.Translate(new Vector3(0,-1,0) * _speed * Time.deltaTime);
+                transform.Translate(new Vector3(0, -1, 0) * _speed * Time.deltaTime);
                 if (transform.position.y < -7f)
                 {
                     transform.position = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
                 }
                 break;
-            
         }
-        //for later: if enemy has been shot or damaged and animation is showing, do not teleport them to new location, let them scroll off screen and destroy
-        
     }
 
+    public virtual void Dodge(float value)
+    {
+        transform.position = new Vector2(transform.position.x + value, transform.position.y);
+    }
 
     public virtual void RotateTowards(Vector2 target)
     {
