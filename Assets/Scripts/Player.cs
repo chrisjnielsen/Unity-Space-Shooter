@@ -117,6 +117,13 @@ public class Player : MonoBehaviour
             }
             _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            var _pickup = GameObject.FindGameObjectWithTag("Powerup").GetComponent<Powerup>();
+            _pickup.CanCollectPickup();
+        }
+
     }
 
     void CalculateMovement()

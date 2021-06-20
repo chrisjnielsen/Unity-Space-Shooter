@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    Player _player;
     [SerializeField]
     private float _speed = 3f;
     //ID for power ups
@@ -16,25 +17,54 @@ public class Powerup : MonoBehaviour
     //6 for NEGATIVE Speed
     [SerializeField]
     private int powerupID;
-    [SerializeField]
-    private AudioClip _powerUpSound;
     private AudioSource _audioSource;
+    private bool _canCollectPickup;
+    private float _pickupMoveSpeed = 4f;
 
 
     // Start is called before the first frame update
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _canCollectPickup = false;
+
+        if (_player == null)
+        {
+            _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
+        else return;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        transform.Translate(Vector2.down * _speed * Time.deltaTime);
+    { 
+        if (_canCollectPickup)
+        {
+            if (_player != null)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _pickupMoveSpeed * Time.deltaTime);
+                Vector2 dist = _player.transform.position - transform.position;
+                if (dist.magnitude <= 0.5f) StartCoroutine(CoolDown());
+            }
+            
+        }
+        else transform.Translate(Vector2.down * _speed * Time.deltaTime);
+
         if (transform.position.y < -6f)
         {
             Destroy(gameObject);
         }
+    }
+
+    public void CanCollectPickup()
+    {
+        _canCollectPickup = true;  
+    }
+
+    IEnumerator CoolDown()
+    {
+        yield return new WaitForSeconds(5f);
+        _canCollectPickup = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -45,7 +75,7 @@ public class Powerup : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                _audioSource.PlayOneShot(_powerUpSound);
+                _audioSource.Play();
                 switch (powerupID)
                 {
                     case 0:

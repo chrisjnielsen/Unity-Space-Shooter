@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2926494814186823247}
   - component: {fileID: 6251475220238538818}
   - component: {fileID: 2258050593748599310}
-  - component: {fileID: 9131206803455982632}
   - component: {fileID: 5534663542989559310}
   - component: {fileID: 7634822024225915327}
+  - component: {fileID: 2715359980175686421}
   m_Layer: 0
   m_Name: ExtraLife
   m_TagString: Powerup
@@ -158,21 +158,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &9131206803455982632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5571155650585671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fe7749fd16a905459dba150c3c3c0d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 2
-  powerupID: 4
-  _powerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
 --- !u!95 &5534663542989559310
 Animator:
   serializedVersion: 3
@@ -202,8 +187,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
@@ -288,6 +273,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2715359980175686421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5571155650585671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe7749fd16a905459dba150c3c3c0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
+  powerupID: 4
 --- !u!1 &2680086967664775831
 GameObject:
   m_ObjectHideFlags: 0

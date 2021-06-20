@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject newEnemy;
 
     // Start is called before the first frame update
-    void Start()
+    void  Start()
     {
         _uiManager = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UIManager>();
         if (_uiManager == null)
