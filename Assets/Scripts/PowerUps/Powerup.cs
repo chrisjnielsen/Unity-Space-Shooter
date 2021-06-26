@@ -105,6 +105,10 @@ public class Powerup : MonoBehaviour
                         player.NegativeSpeed();
                         GetComponent<BoxCollider2D>().enabled = false;
                         break;
+                    case 7:
+                        player.MissilePower();
+                        GetComponent<BoxCollider2D>().enabled = false;
+                        break;
                     default:
                         break;
                 }

@@ -61,6 +61,7 @@ public class SpawnManager : MonoBehaviour
             //4 for extra life
             //5 for Special bullet attack
             //6 for NEGATIVE Speed
+            //7 for Homing Missile
             int randomSelection = Random.Range(0, 100);
             Vector3 posToSpawn = new Vector3(Random.Range(xMin, xMax), 7.5f, 0);
             if(randomSelection<=10)
@@ -75,8 +76,10 @@ public class SpawnManager : MonoBehaviour
                 Instantiate(powerUps[4], posToSpawn, Quaternion.identity);  //about 6% chance extra life
             if (randomSelection >=73 && randomSelection < 81)
                 Instantiate(powerUps[5], posToSpawn, Quaternion.identity);  //about 8% chance special attack
-            if (randomSelection >= 81 && randomSelection < 100)
-                Instantiate(powerUps[6], posToSpawn, Quaternion.identity);  //about 19% chance negative power up
+            if (randomSelection >= 81 && randomSelection < 92)
+                Instantiate(powerUps[6], posToSpawn, Quaternion.identity);  //about 11% chance negative power up
+            if (randomSelection >= 92 && randomSelection < 100)
+                Instantiate(powerUps[7], posToSpawn, Quaternion.identity);  //about 7% chance negative power up
             float _powerupSpawn = Random.Range(4f, 10f);
             yield return new WaitForSeconds(_powerupSpawn);
         }   

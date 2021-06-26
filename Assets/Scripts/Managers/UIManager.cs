@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     private Image _thrustIndicator;
     [SerializeField]
     private Sprite[] _livesSprites;
+    [SerializeField]
+    private Image _missileDisplay;    
+    [SerializeField]
+    private Sprite[] _missileSprites;
 
     [Header("UI Text")]
     [SerializeField]
@@ -31,6 +35,8 @@ public class UIManager : MonoBehaviour
     private Text _enemyText;
     [SerializeField]
     private Text _waveScreenText;
+    [SerializeField]
+    private Text _missileFireText;
 
 
     [Header("Variables")]
@@ -60,6 +66,7 @@ public class UIManager : MonoBehaviour
         _cooldownText.enabled = false;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -167,6 +174,14 @@ public class UIManager : MonoBehaviour
     }
 
     
+    public void UpdateMissiles(int currentMissiles)
+    {
+        if (currentMissiles > 6) currentMissiles = 6;
+        _missileDisplay.sprite = _missileSprites[currentMissiles];
+        if (currentMissiles > 0) _missileFireText.gameObject.SetActive(true);
+        if (currentMissiles == 0) _missileFireText.gameObject.SetActive(false);
+    }
+
 
     public void UpdateLives(int currentlives)
     {

@@ -869,6 +869,80 @@ Transform:
   m_Father: {fileID: 51330518}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &348940691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 348940692}
+  - component: {fileID: 348940694}
+  - component: {fileID: 348940693}
+  m_Layer: 5
+  m_Name: Missile_Display_img
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &348940692
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348940691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1946153076}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 105.25, y: 46.06}
+  m_SizeDelta: {x: 171.5, y: 51.968597}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &348940693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348940691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7ad663261d9a7f0488b63a5fa358bf03, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &348940694
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348940691}
+  m_CullTransparentMesh: 0
 --- !u!1 &451099063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,6 +1510,7 @@ MonoBehaviour:
   - {fileID: 5571155650585671, guid: 9966ccbb578fb06419434d6ec4f4a52b, type: 3}
   - {fileID: 5486162655426207267, guid: 7dd4090aef11cdc4d9a447d3472024c2, type: 3}
   - {fileID: 1979757214160707002, guid: a699dc1f2624d5b4ba95cfb79ff91473, type: 3}
+  - {fileID: 1979757214160707002, guid: a699dc1f2624d5b4ba95cfb79ff91473, type: 3}
   xMax: 9
   xMin: -9
   stopSpawning: 0
@@ -1706,6 +1781,10 @@ MonoBehaviour:
   _thrusters: {fileID: 676433640}
   _laserAudio: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _playerExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _missilePrefab: {fileID: 9029410513326933175, guid: 648fea34c02ae644e952a089dff08abc,
+    type: 3}
+  _missileActive: 0
+  _missileFireRate: 0.8
 --- !u!212 &1084367222
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2699,6 +2778,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
   - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
+  _missileDisplay: {fileID: 348940693}
+  _missileSprites:
+  - {fileID: 21300000, guid: 7ad663261d9a7f0488b63a5fa358bf03, type: 3}
+  - {fileID: 21300000, guid: 8d9641fd96b3e6746aacc309a2aac409, type: 3}
+  - {fileID: 21300000, guid: 8dd350b6b818a694e8ad555e85b6601f, type: 3}
+  - {fileID: 21300000, guid: 6c19ec81b28f55644a246c820d23d2af, type: 3}
+  - {fileID: 21300000, guid: 4b9022ba20ff9db48b532e2f229e2686, type: 3}
+  - {fileID: 21300000, guid: 30311a32654bb3f46b962c9fab4fa993, type: 3}
+  - {fileID: 21300000, guid: 35b65cf207d085a47adbedd99b18f19f, type: 3}
   _scoreText: {fileID: 71440896}
   _gameOverText: {fileID: 578248197}
   _ammoText: {fileID: 1751316562}
@@ -2791,6 +2879,7 @@ RectTransform:
   - {fileID: 1947555614}
   - {fileID: 1311911055}
   - {fileID: 172768682}
+  - {fileID: 348940692}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

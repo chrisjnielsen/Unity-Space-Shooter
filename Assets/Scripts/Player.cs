@@ -60,6 +60,15 @@ public class Player : MonoBehaviour
     private float holdTime;
     private bool _canUseThrusters;
 
+    [SerializeField]
+    private GameObject _missilePrefab;
+    [SerializeField]
+    private bool _missileActive;
+    private int _missileCount;
+    private int _missileMax = 6;
+    [SerializeField]
+    private float _missileFireRate = 0.8f;
+
 
     private void Awake()
     {
@@ -70,8 +79,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+
+        _missileCount = 0;
         _canUseThrusters = true;
         _thrusters.GetComponent<SpriteRenderer>().enabled = false;
         _ammoEmpty = false;
@@ -91,7 +100,7 @@ public class Player : MonoBehaviour
         }
         _uiManager.UpdateLives(_lives);
         _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
-        
+        _uiManager.UpdateMissiles(_missileCount);
 
         transform.position = new Vector3(0, -3.7f, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn").GetComponent<SpawnManager>();
@@ -116,6 +125,21 @@ public class Player : MonoBehaviour
                 _ammoEmpty = true;
             }
             _uiManager.UpdateAmmo(_currentLaserCount, _totalLaserCount);
+        }
+        else if ((Input.GetKey(KeyCode.V) && Time.time > _nextFire && _missileActive == true && FindClosestEnemy() != null))
+        {
+            _nextFire = Time.time + _missileFireRate;   
+           
+            if (_missileCount == 0)
+            {
+                _missileActive = false;
+            }
+            else if (_missileCount > 0)
+            {
+                Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+                _missileCount--;
+                _uiManager.UpdateMissiles(_missileCount);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -173,6 +197,42 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public void MissilePower()
+    {
+        _missileCount += 3;
+        _missileActive = true;
+        if (_missileCount > _missileMax) _missileCount = _missileMax;
+        _uiManager.UpdateMissiles(_missileCount);
+    }
+
+
+    GameObject FindClosestEnemy()
+    {
+        GameObject[] enemies;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+
+        foreach (GameObject go in enemies)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if(curDistance < distance)
+    
+        {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+
+
+
+
+
 
     public void ThrusterOn()
     {

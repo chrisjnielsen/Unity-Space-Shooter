@@ -16,6 +16,7 @@ TagManager:
   - Explosion
   - EnemyShield
   - EnemyLaser
+  - HomingMissile
   layers:
   - Default
   - TransparentFX

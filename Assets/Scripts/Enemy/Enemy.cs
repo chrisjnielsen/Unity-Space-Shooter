@@ -185,6 +185,22 @@ public abstract class Enemy : MonoBehaviour
                 case "Enemy2":
                     return;
 
+                case "HomingMissile":
+                {
+                    if(_hasShield == true)
+                    {
+                        Destroy(other.gameObject);
+                        _hasShield = false;
+                    }
+                    else if (_hasShield == false)
+                    {
+                        Destroy(other.gameObject);
+                        _player.AddScore(Random.Range(10, 20));
+                        StartCoroutine(EnemyDeath());
+                    }
+                    break;
+                }
+
                 default:
                     break;   
        } 
@@ -224,9 +240,7 @@ public abstract class Enemy : MonoBehaviour
         //Animator trigger
         _anim.SetTrigger("OnEnemyDeath");
         GetComponent<PolygonCollider2D>().enabled = false; // disable collider on death cycle so no more chance they will cause damage to Player
-           
         _canFire =-1;
-        
         _audioSource.Play();
         Destroy(this.gameObject, 1.6f);
         yield return null;

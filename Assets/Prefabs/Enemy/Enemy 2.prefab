@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4572069134547885757}
   m_Layer: 9
   m_Name: Enemy 2
-  m_TagString: Enemy2
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f2ce1c44ed0ea408eb5abfd1072225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 2.5
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 8421449660824297776, guid: 612d0f7d38e670f4b89cd2caf2613748,

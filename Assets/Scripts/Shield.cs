@@ -23,8 +23,11 @@ public class Shield : MonoBehaviour
         }
 
         if (other.CompareTag("Laser"))
+        {   
+            ShieldOff();
+        }
+        if (other.CompareTag("HomingMissile"))
         {
-            Destroy(other.gameObject);
             ShieldOff();
         }
     }
