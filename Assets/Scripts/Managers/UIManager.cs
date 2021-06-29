@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour
     private Text _waveScreenText;
     [SerializeField]
     private Text _missileFireText;
+    [SerializeField]
+    private Text _winText;
 
 
     [Header("Variables")]
@@ -66,7 +68,7 @@ public class UIManager : MonoBehaviour
         _cooldownText.enabled = false;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
-        
+        _winText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -212,4 +214,26 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+    IEnumerator GameWinFlicker()
+    {
+        while (true)
+        {
+            _winText.text = "WINNER! ALL STAGES CLEARED \n THANK YOU FOR PLAYING!";
+            yield return new WaitForSeconds(0.5f);
+            _winText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+
+    public void GameWin()
+    {
+        _winText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        StartCoroutine(GameWinFlicker());
+        GameManager.Instance.GameOver();
+    }
+
+
+
 }

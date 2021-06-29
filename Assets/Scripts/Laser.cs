@@ -7,7 +7,6 @@ public class Laser : MonoBehaviour
     public float speed =8f;
     public bool _isEnemyLaser = false;
     public bool _isBackwards = false;
-   
     
     // Start is called before the first frame update
     void Start()
@@ -29,6 +28,8 @@ public class Laser : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+     
 
     }
     void MoveUp()
@@ -59,7 +60,8 @@ public class Laser : MonoBehaviour
         }
     }
 
-    public void EnemyLaserBackwards()
+
+   public void EnemyLaserBackwards()
     {
         _isBackwards = true;
     }
@@ -93,9 +95,5 @@ public class Laser : MonoBehaviour
             this.GetComponent<BoxCollider2D>().enabled = false;
             this.GetComponent<SpriteRenderer>().enabled = false;
         }
-        
-
     }
-
-
 }

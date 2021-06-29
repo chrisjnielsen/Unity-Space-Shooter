@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf7c34a0dc4e6348bea04faa70406ee, type: 3}
+  m_Name: BossShip
+  m_EditorClassIdentifier: 
+  m_Labels:
+  - m_Name: Damage
+    m_Hash: 375673178
+    m_CategoryList:
+    - m_Name: 01
+      m_Hash: -817814474
+      m_Sprite: {fileID: 21300000, guid: 5939592cd9b9f4335a4ee907fa989be4, type: 3}
+    - m_Name: 02
+      m_Hash: 1447589260
+      m_Sprite: {fileID: 21300000, guid: d4e64a9141aff784d9fa3acc6d644544, type: 3}
+    - m_Name: 03
+      m_Hash: 558843162
+      m_Sprite: {fileID: 21300000, guid: 2f5a38d80d934df4ba4798a3940ed4dc, type: 3}
+    - m_Name: 04
+      m_Hash: -1087647559
+      m_Sprite: {fileID: 21300000, guid: be3a42855ee84e449aad439f39e81a81, type: 3}
+    - m_Name: 05
+      m_Hash: -936583121
+      m_Sprite: {fileID: 21300000, guid: 8c675024db460d64b9d3456fca5a9c9e, type: 3}

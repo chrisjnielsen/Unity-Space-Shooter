@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be983f713ac0cf47bfe9d3adc723a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 2.5
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 4660096438722571426, guid: 4e3e5e8930e38f74cb02e07e37e1ad1d,

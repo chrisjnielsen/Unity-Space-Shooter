@@ -27,13 +27,13 @@ public class LaserDetector : MonoBehaviour
             if(this.transform.position.x < collision.transform.position.x)
             {
                 value = -1.2f;
-                if (Random.Range(0, 2)==0) this.GetComponentInParent<Enemy>().Dodge(value);
+                if (Random.Range(0, 3)==0) this.GetComponentInParent<Enemy>().Dodge(value);
             }
 
             if(this.transform.position.x > collision.transform.position.x)
             {
                 value = 1.2f;
-                if(Random.Range(0,2)==0) this.GetComponentInParent<Enemy>().Dodge(value);
+                if(Random.Range(0,3)==0) this.GetComponentInParent<Enemy>().Dodge(value);
             }
 
         }

@@ -135,7 +135,7 @@ public abstract class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public virtual void OnTriggerEnter2D(Collider2D other)
     {
        switch (other.gameObject.tag)
             {

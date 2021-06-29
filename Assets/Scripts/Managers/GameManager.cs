@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
     private bool _isGameOver;
 
     List<GameObject> _wayPoints = new List<GameObject>();
+    List<GameObject> _bossWayPoints = new List<GameObject>();
     public List<GameObject> Waypoints { get { return _wayPoints; } set { _wayPoints = value; } }
 
+    public List<GameObject> BossWaypoints {  get { return _bossWayPoints; } set { _bossWayPoints = value; } }
 
     //Game Manager can be accessed globally, holds references to waypoints, to then assign to Enemy
 
@@ -60,6 +62,15 @@ public class GameManager : MonoBehaviour
         {
             _wayPoints.Add(child.gameObject);   
         }
+
+        GameObject bossGameObjects = GameObject.Find("WaypointContainer2");
+
+        foreach(Transform child in bossGameObjects.transform)
+        {
+            _bossWayPoints.Add(child.gameObject);
+        }
+
+
     }
 
     // Update is called once per frame
@@ -83,5 +94,7 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
     }
+
+
 
 }

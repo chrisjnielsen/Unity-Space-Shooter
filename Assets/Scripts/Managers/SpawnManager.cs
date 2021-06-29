@@ -24,8 +24,6 @@ public class SpawnManager : MonoBehaviour
 
     UIManager _uiManager;
 
-    private GameObject newEnemy;
-
     // Start is called before the first frame update
     void  Start()
     {
@@ -79,7 +77,7 @@ public class SpawnManager : MonoBehaviour
             if (randomSelection >= 81 && randomSelection < 92)
                 Instantiate(powerUps[6], posToSpawn, Quaternion.identity);  //about 11% chance negative power up
             if (randomSelection >= 92 && randomSelection < 100)
-                Instantiate(powerUps[7], posToSpawn, Quaternion.identity);  //about 7% chance negative power up
+                Instantiate(powerUps[7], posToSpawn, Quaternion.identity);  //about 7% chance missile power up
             float _powerupSpawn = Random.Range(4f, 10f);
             yield return new WaitForSeconds(_powerupSpawn);
         }   

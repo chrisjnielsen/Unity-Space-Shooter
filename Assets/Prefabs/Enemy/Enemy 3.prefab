@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 354f773b1527ed3409c354ab7ccbb322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 2.5
   xMax: 9
   xMin: -9
   _enemyLaser: {fileID: 0}
